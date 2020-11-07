@@ -1,0 +1,1 @@
+enum WallpaperSetType { Auto, Cropped }

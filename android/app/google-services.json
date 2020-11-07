@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "708006433503",
+    "firebase_url": "https://pubg-wallpapers-509e2.firebaseio.com",
+    "project_id": "pubg-wallpapers-509e2",
+    "storage_bucket": "pubg-wallpapers-509e2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:708006433503:android:e5b08dce275b8b2d150f6a",
+        "android_client_info": {
+          "package_name": "com.rebersincar.pubgwallpapers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "708006433503-rnt7vgp5d76rpm3fk8lmbj8isnr8vu4i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfb4qVIqn7RHWIjQME11N1kIBy8vtZw4k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "708006433503-rnt7vgp5d76rpm3fk8lmbj8isnr8vu4i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
