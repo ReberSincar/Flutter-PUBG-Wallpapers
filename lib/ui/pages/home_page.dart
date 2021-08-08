@@ -1,4 +1,5 @@
-import 'package:pubg_wallpaper/ads/ads.dart';
+import 'package:get/get.dart';
+// import 'package:pubg_wallpaper/ads/ads.dart';
 import 'package:pubg_wallpaper/constants/colors.dart';
 import 'package:pubg_wallpaper/controllers/fav_list_controller.dart';
 import 'package:pubg_wallpaper/controllers/pubg_controller.dart';
@@ -6,7 +7,6 @@ import 'package:pubg_wallpaper/controllers/position_controller.dart';
 import 'package:pubg_wallpaper/ui/pages/pubg_wallpapers.dart';
 import 'package:pubg_wallpaper/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:get/state_manager.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -17,11 +17,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
-  GoogleAds _ads = GoogleAds.getInstance();
+  // GoogleAds _ads = GoogleAds.getInstance();
 
   @override
   void initState() {
-    _ads.showBannerAd();
+    // _ads.showBannerAd();
     Get.put(PubgImagesController());
     Get.put(FavController());
     Get.put(PositionController());

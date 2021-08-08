@@ -1,4 +1,4 @@
-import 'package:pubg_wallpaper/ads/ads.dart';
+// import 'package:pubg_wallpaper/ads/ads.dart';
 import 'package:pubg_wallpaper/constants/colors.dart';
 import 'package:pubg_wallpaper/controllers/fav_list_controller.dart';
 import 'package:pubg_wallpaper/controllers/pubg_controller.dart';
@@ -11,20 +11,20 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gesture_zoom_box/gesture_zoom_box.dart';
 import 'package:get/get.dart';
-import '../../services/file_operations.dart';
+import '../../services/file_service.dart';
 import '../../utils/utils.dart';
 
 class ImageDialog extends StatelessWidget {
   ImageDialog({Key key, this.list}) : super(key: key);
   final List<ImageModel> list;
-  final FileOperations fileOperations = FileOperations.getInstance();
-  final DB db = DB.getInstance();
-  final FireStoreDB fireStoreDB = FireStoreDB.getInstance();
+  final FileIOService fileService = Get.find();
+  final DBService db = Get.find();
+  final FireStoreDB fireStoreDB = Get.find();
   final FavController favController = Get.find();
   final PubgImagesController pubgController = Get.find();
   final PositionController positionController = Get.find();
 
-  final GoogleAds _ads = GoogleAds.getInstance();
+  // final GoogleAds _ads = GoogleAds.getInstance();
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class ImageDialog extends StatelessWidget {
             controller: PageController(
                 initialPage: positionController.position.value, keepPage: true),
             onPageChanged: (value) {
-              _ads.showInterstitialAd();
+              // _ads.showInterstitialAd();
               positionController.changePosition(value);
               fireStoreDB.addViewCountPubg(
                   list[value].id, list[value].viewCount);
@@ -108,7 +108,7 @@ class ImageDialog extends StatelessWidget {
                           ),
                           onPressed: () async {
                             Utils.showLoadingDialog();
-                            await fileOperations.saveImageUrl(
+                            await fileService.saveImageUrl(
                                 list[positionController.position.value]
                                     .originalImage);
                             Get.back();

@@ -1,16 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 
-class FireStoreDB {
-  static FireStoreDB _fireStoreDB;
+class FireStoreDB extends GetxService {
   FirebaseFirestore firebaseInstance;
   String pubgImageCollection = 'wallpapers';
-  FireStoreDB._() {
-    firebaseInstance = FirebaseFirestore.instance;
-  }
 
-  static getInstance() {
-    if (_fireStoreDB == null) _fireStoreDB = FireStoreDB._();
-    return _fireStoreDB;
+  @override
+  onInit() {
+    firebaseInstance = FirebaseFirestore.instance;
+    super.onInit();
   }
 
   getPubgImages() {

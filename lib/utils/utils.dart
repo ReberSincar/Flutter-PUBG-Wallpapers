@@ -1,14 +1,13 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:pubg_wallpaper/constants/colors.dart';
 import 'package:pubg_wallpaper/models/image.dart';
+import 'package:pubg_wallpaper/services/file_service.dart';
 import 'package:pubg_wallpaper/ui/dialogs/crop_image_dialog.dart';
 import 'package:pubg_wallpaper/ui/dialogs/favorite_dialog.dart';
 import 'package:pubg_wallpaper/ui/dialogs/image_dialog.dart';
 import 'package:pubg_wallpaper/ui/dialogs/image_fav_dialog.dart';
 import 'package:pubg_wallpaper/ui/dialogs/loading_dialog.dart';
 import 'package:pubg_wallpaper/ui/dialogs/wallpaper_type_dialog.dart';
-import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -16,6 +15,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_crop/image_crop.dart';
 import 'package:pubg_wallpaper/enums/enums.dart';
+import 'package:share/share.dart';
 import 'package:wallpaper_manager/wallpaper_manager.dart';
 
 class Utils {
@@ -109,12 +109,21 @@ class Utils {
   }
 
   static shareImage(String url) async {
-    var request = await HttpClient().getUrl(Uri.parse(url));
-    var response = await request.close();
-    Uint8List bytes = await consolidateHttpClientResponseBytes(response);
-    await Share.file('PUBG Wallpaper', 'pubg.jpg', bytes, 'image/jpg',
-        text:
-            'For more pubg wallpapers : https://play.google.com/store/apps/details?id=com.rebersincar.pubgwallpapers');
+    FileIOService fileService = Get.find();
+    // var request = await HttpClient().getUrl(Uri.parse(url));
+    // var response = await request.close();
+    // Uint8List bytes = await consolidateHttpClientResponseBytes(response);
+    File file = await fileService.saveImageUrl(url);
+    await Share.shareFiles(
+      [file.path],
+      mimeTypes: ['image/jpg'],
+      subject: 'PUBG Wallpaper',
+      text:
+          'For more pubg wallpapers : https://play.google.com/store/apps/details?id=com.rebersincar.pubgwallpapers',
+    );
+    // await Share.file('PUBG Wallpaper', 'pubg.jpg', bytes, 'image/jpg',
+    //     text:
+    //         'For more pubg wallpapers : https://play.google.com/store/apps/details?id=com.rebersincar.pubgwallpapers');
   }
 
   static showShortToast(String text) {

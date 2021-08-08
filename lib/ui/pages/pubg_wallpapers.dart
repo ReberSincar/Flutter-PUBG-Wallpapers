@@ -1,5 +1,5 @@
-import 'package:pubg_wallpaper/ads/ads.dart';
-import 'package:pubg_wallpaper/ads/native_ad_container.dart';
+// import 'package:pubg_wallpaper/ads/ads.dart';
+// import 'package:pubg_wallpaper/ads/native_ad_container.dart';
 import 'package:pubg_wallpaper/constants/colors.dart';
 import 'package:pubg_wallpaper/controllers/fav_list_controller.dart';
 import 'package:pubg_wallpaper/controllers/pubg_controller.dart';
@@ -23,15 +23,15 @@ class PubgWallpapers extends StatefulWidget {
 
 class _PubgWallpapersState extends State<PubgWallpapers>
     with AutomaticKeepAliveClientMixin {
-  List<ImageModel> trendList = new List();
+  List<ImageModel> trendList = [];
   var scrollController = ScrollController();
   final PositionController positionController = Get.find();
   final PubgImagesController pubgController = Get.find();
   final FavController favController = Get.find();
-  final FireStoreDB fireStoreDB = FireStoreDB.getInstance();
+  final FireStoreDB fireStoreDB = Get.find();
   QuerySnapshot collectionState;
 
-  GoogleAds _ads = GoogleAds.getInstance();
+  // GoogleAds _ads = GoogleAds.getInstance();
   @override
   bool get wantKeepAlive => true;
   @override
@@ -109,14 +109,20 @@ class _PubgWallpapersState extends State<PubgWallpapers>
                 crossAxisSpacing: 5.0,
                 itemCount: pubgController.listDocument.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return index == 0 || index % 5 != 0
-                      ? ImageContainer(
-                          index: index,
-                          onIncreaseView: () {
-                            _imageContainerViewCount(index);
-                          },
-                        )
-                      : NativeAdContainer();
+                  return ImageContainer(
+                    index: index,
+                    onIncreaseView: () {
+                      _imageContainerViewCount(index);
+                    },
+                  );
+                  // return index == 0 || index % 5 != 0
+                  //     ? ImageContainer(
+                  //         index: index,
+                  //         onIncreaseView: () {
+                  //           _imageContainerViewCount(index);
+                  //         },
+                  //       )
+                  //     : NativeAdContainer();
                 },
               ),
             )
@@ -125,7 +131,7 @@ class _PubgWallpapersState extends State<PubgWallpapers>
   }
 
   _imageContainerViewCount(int index) {
-    _ads.showInterstitialAd();
+    // _ads.showInterstitialAd();
     positionController.changePosition(index);
     fireStoreDB.addViewCountPubg(pubgController.listDocument[index].id,
         pubgController.listDocument[index].viewCount);

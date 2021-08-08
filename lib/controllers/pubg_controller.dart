@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 class PubgImagesController extends GetxController {
-  FireStoreDB fireStoreDB = FireStoreDB.getInstance();
+  final FireStoreDB fireStoreDB = Get.find();
   var listDocument = <ImageModel>[].obs;
   QuerySnapshot collectionState;
   @override

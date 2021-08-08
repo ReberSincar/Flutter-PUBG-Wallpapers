@@ -1,18 +1,16 @@
 import 'dart:convert';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:pubg_wallpaper/models/image.dart';
 import 'package:pubg_wallpaper/utils/utils.dart';
 import 'package:get_storage/get_storage.dart';
 
-class DB {
-  static DB _db;
+class DBService extends GetxService {
   GetStorage pubgBox;
-  DB._() {
-    pubgBox = GetStorage("PUBG");
-  }
 
-  static getInstance() {
-    if (_db == null) _db = DB._();
-    return _db;
+  @override
+  onInit() {
+    pubgBox = GetStorage("PUBG");
+    super.onInit();
   }
 
   addPubgImage(ImageModel image) {

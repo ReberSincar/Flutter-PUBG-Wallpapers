@@ -8,14 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:gesture_zoom_box/gesture_zoom_box.dart';
 import 'package:get/get.dart';
 
-import '../../services/file_operations.dart';
+import '../../services/file_service.dart';
 import '../../utils/utils.dart';
 
 class ImageFavDialog extends StatelessWidget {
   ImageFavDialog({Key key, this.imageModel}) : super(key: key);
   final ImageModel imageModel;
-  final FileOperations fileOperations = FileOperations.getInstance();
-  final DB db = DB.getInstance();
+  final FileIOService fileService = Get.find();
+  final DBService db = Get.find();
   final FavController controller = Get.find();
 
   @override
@@ -84,7 +84,7 @@ class ImageFavDialog extends StatelessWidget {
                           ),
                           onPressed: () async {
                             Utils.showLoadingDialog();
-                            await fileOperations
+                            await fileService
                                 .saveImageUrl(imageModel.originalImage);
                             Get.back();
                           },

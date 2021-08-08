@@ -1,5 +1,5 @@
-import 'package:pubg_wallpaper/ads/ads.dart';
-import 'package:pubg_wallpaper/ads/native_ad_container.dart';
+// import 'package:pubg_wallpaper/ads/ads.dart';
+// import 'package:pubg_wallpaper/ads/native_ad_container.dart';
 import 'package:pubg_wallpaper/constants/colors.dart';
 import 'package:pubg_wallpaper/controllers/fav_list_controller.dart';
 import 'package:pubg_wallpaper/controllers/pubg_controller.dart';
@@ -12,7 +12,6 @@ import 'package:empty_widget/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
-import '../../services/file_operations.dart';
 
 class FavoriteDialog extends StatefulWidget {
   FavoriteDialog({Key key}) : super(key: key);
@@ -22,11 +21,9 @@ class FavoriteDialog extends StatefulWidget {
 }
 
 class _FavoriteDialogState extends State<FavoriteDialog> {
-  final FileOperations fileOperations = FileOperations.getInstance();
+  final DBService db = Get.find();
 
-  final DB db = DB.getInstance();
-
-  final FireStoreDB fireStoreDB = FireStoreDB.getInstance();
+  final FireStoreDB fireStoreDB = Get.find();
 
   final FavController controller = Get.find();
 
@@ -37,7 +34,7 @@ class _FavoriteDialogState extends State<FavoriteDialog> {
   final PubgImagesController pubgController = Get.find();
   String appBarText;
 
-  GoogleAds _ads = GoogleAds.getInstance();
+  // GoogleAds _ads = GoogleAds.getInstance();
 
   @override
   void initState() {
@@ -73,7 +70,7 @@ class _FavoriteDialogState extends State<FavoriteDialog> {
                             end: Alignment.topCenter),
                       ),
                       padding: EdgeInsets.only(left: 10, right: 10),
-                      child: EmptyListWidget(
+                      child: EmptyWidget(
                         title: 'No Favorite Wallpapers',
                         image: 'assets/empty.png',
                         titleTextStyle: Theme.of(context)
@@ -103,60 +100,58 @@ class _FavoriteDialogState extends State<FavoriteDialog> {
                         crossAxisSpacing: 5.0,
                         itemCount: favList.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return index == 0 || index % 5 != 0
-                              ? GestureDetector(
-                                  onTap: () {
-                                    positionController.changePosition(index);
-                                    fireStoreDB.addViewCountPubg(
-                                        favList[index].id,
-                                        favList[index].viewCount);
-                                    _ads.showInterstitialAd();
-                                    Utils.showImageFavDialog(favList[index]);
-                                  },
-                                  child: Center(
-                                    child: Card(
-                                      color: Colors.black87,
-                                      child: CachedNetworkImage(
-                                        imageUrl: favList[index].thumbImage,
-                                        fit: BoxFit.cover,
-                                        imageBuilder:
-                                            (context, imageProvider) =>
-                                                Container(
-                                          decoration: BoxDecoration(
-                                            boxShadow: [
-                                              BoxShadow(
-                                                offset: const Offset(3.0, 3.0),
-                                                blurRadius: 5.0,
-                                                spreadRadius: 2.0,
-                                              ),
-                                            ],
-                                            image: DecorationImage(
-                                                image: imageProvider,
-                                                fit: BoxFit.cover),
-                                          ),
+                          return
+                              // index == 0 || index % 5 != 0 ?
+                              GestureDetector(
+                            onTap: () {
+                              positionController.changePosition(index);
+                              fireStoreDB.addViewCountPubg(
+                                  favList[index].id, favList[index].viewCount);
+                              // _ads.showInterstitialAd();
+                              Utils.showImageFavDialog(favList[index]);
+                            },
+                            child: Center(
+                              child: Card(
+                                color: Colors.black87,
+                                child: CachedNetworkImage(
+                                  imageUrl: favList[index].thumbImage,
+                                  fit: BoxFit.cover,
+                                  imageBuilder: (context, imageProvider) =>
+                                      Container(
+                                    decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          offset: const Offset(3.0, 3.0),
+                                          blurRadius: 5.0,
+                                          spreadRadius: 2.0,
                                         ),
-                                        placeholder: (context, url) {
-                                          return Center(
-                                            child: SizedBox(
-                                              width: 20,
-                                              height: 20,
-                                              child: CircularProgressIndicator(
-                                                valueColor:
-                                                    AlwaysStoppedAnimation<
-                                                        Color>(Colors.grey),
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                      elevation: 15,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
+                                      ],
+                                      image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.cover),
                                     ),
                                   ),
-                                )
-                              : NativeAdContainer();
+                                  placeholder: (context, url) {
+                                    return Center(
+                                      child: SizedBox(
+                                        width: 20,
+                                        height: 20,
+                                        child: CircularProgressIndicator(
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                                  Colors.grey),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                                elevation: 15,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                              ),
+                            ),
+                          );
+                          // : NativeAdContainer();
                         },
                       ),
                     ),

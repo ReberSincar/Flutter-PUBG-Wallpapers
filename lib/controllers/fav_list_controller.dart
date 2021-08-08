@@ -5,18 +5,18 @@ import 'package:pubg_wallpaper/models/image.dart';
 import 'package:get/get.dart';
 
 class FavController extends GetxController {
-  DB db = DB.getInstance();
-  var pubgFavList = List<ImageModel>().obs;
+  DBService dbService = Get.find();
+  var pubgFavList = List<ImageModel>.empty().obs;
   @override
   void onInit() {
-    List<ImageModel> dbImages = db.getPubgImageModelList();
+    List<ImageModel> dbImages = dbService.getPubgImageModelList();
     pubgFavList = dbImages.obs;
     listenBox();
     super.onInit();
   }
 
   listenBox() {
-    db.pubgBox.listenKey('fav_list', (value) {
+    dbService.pubgBox.listenKey('fav_list', (value) {
       pubgFavList.clear();
       for (String item in value) {
         ImageModel image = ImageModel.fromMap(jsonDecode(item));
